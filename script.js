@@ -3,21 +3,30 @@ function ecrire(n) {
     zone.textContent += n;
 }
 
+function supprimer() {
+    let zone = document.getElementById("zone");
+    zone.textContent = zone.textContent.slice(0, -1); // Remove last character
+}
+
 function effacerTout() {
     let zone = document.getElementById("zone");
-    zone.textContent = "";
+    zone.textContent = ""; // Clear the entire display
 }
 
 function calculer() {
     let zone = document.getElementById("zone");
-    try {
-        zone.textContent = eval(zone.textContent);
-    } catch (err) {
-        zone.textContent = "Erreur";
-    }
-}
+    let expression = zone.textContent;
 
-function supprimer() {
-    let zone = document.getElementById("zone");
-    zone.textContent = zone.textContent.slice(0, -1); // Remove last character
+    // Check for division by zero using regex
+    const divisionByZeroPattern = /\/\s*0/;
+    if (divisionByZeroPattern.test(expression)) {
+        zone.textContent = "Erreur: Division par zéro"; // Display error message
+        return;
+    }
+
+    try {
+        zone.textContent = eval(expression);
+    } catch (err) {
+        zone.textContent = "Erreur"; // Display generic error message
+    }
 }
